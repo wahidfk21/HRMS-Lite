@@ -39,6 +39,12 @@ class AttendanceSerializer(serializers.ModelSerializer):
             'created_at'
         ]
         read_only_fields = ['id', 'created_at', 'employee_details']
+        # Disable automatic validators - we handle validation in MongoDB directly
+        extra_kwargs = {
+            'employee_id': {
+                'validators': [],  # Remove auto-generated validators
+            }
+        }
     
     def validate_employee_id(self, value):
         """

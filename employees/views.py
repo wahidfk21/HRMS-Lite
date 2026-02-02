@@ -44,14 +44,47 @@ def employee_list_create(request):
     
     elif request.method == 'POST':
         try:
+            from datetime import datetime
+            
+            # Use serializer for validation only
             serializer = EmployeeSerializer(data=request.data)
             
             if serializer.is_valid():
-                employee = serializer.save()
+                validated_data = serializer.validated_data
+                
+                # Check for duplicate employee_id in MongoDB
+                employees_collection = get_collection('employees')
+                existing = employees_collection.find_one({'employee_id': validated_data['employee_id']})
+                if existing:
+                    return Response({
+                        'success': False,
+                        'errors': {'employee_id': ['Employee with this Employee ID already exists.']}
+                    }, status=status.HTTP_400_BAD_REQUEST)
+                
+                # Insert into MongoDB directly
+                employee_doc = {
+                    'employee_id': validated_data['employee_id'],
+                    'full_name': validated_data['full_name'],
+                    'email': validated_data['email'],
+                    'department': validated_data['department'],
+                    'created_at': datetime.utcnow()
+                }
+                result = employees_collection.insert_one(employee_doc)
+                
+                # Prepare clean response data (remove MongoDB _id, use string id)
+                response_data = {
+                    'id': str(result.inserted_id),
+                    'employee_id': validated_data['employee_id'],
+                    'full_name': validated_data['full_name'],
+                    'email': validated_data['email'],
+                    'department': validated_data['department'],
+                    'created_at': employee_doc['created_at'].isoformat() + 'Z'
+                }
+                
                 return Response({
                     'success': True,
                     'message': 'Employee created successfully.',
-                    'data': serializer.data
+                    'data': response_data
                 }, status=status.HTTP_201_CREATED)
             else:
                 return Response({

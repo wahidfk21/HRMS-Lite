@@ -17,6 +17,12 @@ class EmployeeSerializer(serializers.ModelSerializer):
         model = Employee
         fields = ['id', 'employee_id', 'full_name', 'email', 'department', 'created_at']
         read_only_fields = ['id', 'created_at']
+        # Disable automatic unique validators - we check uniqueness in MongoDB directly
+        extra_kwargs = {
+            'employee_id': {
+                'validators': [],  # Remove auto-generated UniqueValidator
+            }
+        }
 
     def _get_pk_string(self, obj):
         """Get MongoDB _id/pk as string (djongo may expose as _id, pk, or in __dict__)."""
@@ -47,15 +53,11 @@ class EmployeeSerializer(serializers.ModelSerializer):
     
     def validate_employee_id(self, value):
         """
-        Validate employee_id is not empty and is unique.
+        Validate employee_id is not empty.
+        Note: Uniqueness is checked in the view using MongoDB directly.
         """
         if not value or not value.strip():
             raise serializers.ValidationError("Employee ID is required and cannot be empty.")
-        
-        # Check uniqueness on create
-        if not self.instance:  # Only on creation
-            if Employee.objects.filter(employee_id=value).exists():
-                raise serializers.ValidationError("Employee with this Employee ID already exists.")
         
         return value.strip()
     

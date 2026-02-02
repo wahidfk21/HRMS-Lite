@@ -69,20 +69,20 @@ TEMPLATES = [
 WSGI_APPLICATION = 'hrms.wsgi.application'
 
 
-# Database - MongoDB Configuration using djongo
-# IMPORTANT: Replace with your actual MongoDB connection string
-# For local MongoDB: 'mongodb://localhost:27017/hrms_lite_db'
-# For MongoDB Atlas: 'mongodb+srv://username:password@cluster.mongodb.net/hrms_lite_db'
+# Database Configuration
+# Django uses SQLite for internal migrations (lightweight, no setup needed)
+# All app data is stored in MongoDB via direct pymongo connections (see hrms/mongodb_client.py)
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'hrms_lite_db',
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': 'mongodb://localhost:27017/hrms_lite_db',
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# MongoDB Configuration (used by the application via mongodb_client.py)
+# Replace with your MongoDB Atlas connection string for deployment
+MONGODB_URI = '##########'
+MONGODB_DB_NAME = 'hrms_lite_db'
 
 
 # Password validation
