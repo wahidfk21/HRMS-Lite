@@ -1,0 +1,56 @@
+.employee-list {
+  margin-top: 24px;
+}
+
+.employee-list-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  gap: 16px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.employee-list-loading p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.delete-confirmation {
+  text-align: center;
+}
+
+.delete-confirmation p {
+  margin-bottom: 16px;
+  color: #4b5563;
+  font-size: 15px;
+}
+
+.employee-details {
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 6px;
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.employee-details strong {
+  font-size: 16px;
+  color: #1f2937;
+}
+
+.employee-id {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.warning-text {
+  color: #ef4444;
+  font-size: 13px;
+  font-weight: 500;
+}

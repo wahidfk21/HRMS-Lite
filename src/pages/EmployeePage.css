@@ -1,0 +1,15 @@
+.notification-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: auto;
+  color: inherit;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.notification-close:hover {
+  opacity: 1;
+}
