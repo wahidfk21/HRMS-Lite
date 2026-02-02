@@ -17,6 +17,7 @@ const EmployeePage = () => {
   // Fetch employees on component mount
   useEffect(() => {
     fetchEmployees();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchEmployees = async () => {
