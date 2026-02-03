@@ -81,7 +81,7 @@ DATABASES = {
 
 # MongoDB Configuration (used by the application via mongodb_client.py)
 # Replace with your MongoDB Atlas connection string for deployment
-MONGODB_URI = '##########'
+MONGODB_URI = 'mongodb+srv://wahidweb4next_db_user:nYFdSxPKsgHf06mk@cluster0.q9j4jpp.mongodb.net/hrms_lite_db?retryWrites=true&w=majority&appName=Cluster0'
 MONGODB_DB_NAME = 'hrms_lite_db'
 
 
